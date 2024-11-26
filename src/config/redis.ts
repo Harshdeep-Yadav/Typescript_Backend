@@ -1,5 +1,5 @@
-import { createClient } from 'redis';
-import dotenv from 'dotenv';
+import { createClient } from "redis";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -16,32 +16,32 @@ const redisClient = createClient({
 });
 
 // Logging and error handling
-redisClient.on('connect', () => {
-  console.log('Redis: Connected successfully.');
+redisClient.on("connect", () => {
+  console.log("Redis: Connected successfully 🥳.");
 });
 
-redisClient.on('ready', () => {
-  console.log('Redis: Client is ready to use.');
+redisClient.on("ready", () => {
+  console.log("Redis: Client is ready to use 👋.");
 });
 
-redisClient.on('error', (err) => {
-  console.error('Redis: Connection error:', err.message);
+redisClient.on("error", (err) => {
+  console.error("Redis: Connection error:", err.message);
 });
 
-redisClient.on('end', () => {
-  console.warn('Redis: Connection closed.');
+redisClient.on("end", () => {
+  console.warn("Redis: Connection closed 😞.");
 });
 
 // Initialize Redis connection
 const connectRedis = async () => {
   try {
-    console.log('Redis: Attempting to connect...');
+    console.log("Redis: Attempting to connect...");
     await redisClient.connect();
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Redis: Failed to connect:', error.message);
+      console.error("Redis: Failed to connect:", error.message);
     } else {
-      console.error('Redis: Unknown error occurred during connection.');
+      console.error("Redis: Unknown error occurred during connection.");
     }
     process.exit(1); // Exit the process if Redis connection fails
   }

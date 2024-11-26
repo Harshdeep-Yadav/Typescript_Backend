@@ -76,19 +76,22 @@ export const deleteFromCache = async (key: string): Promise<void> => {
 export const getOrSetCache = async (
   key: string,
   fallbackFn: () => Promise<any>,
-  ttl: number = 3600
+  ttl: number = 10 // Default TTL of 10 seconds
 ): Promise<any> => {
   try {
-    const cachedData = await getFromCache(key);
+    const cachedData = await getFromCache(key); // Check Redis cache
     if (cachedData) {
-      return cachedData; // If data is found in cache, return it
+      console.log(`Cache hit for key: ${key}`); // Log cache hit
+      return cachedData; // Return the cached data
     }
 
     // If cache miss, fetch data using fallback function (e.g., database query)
     const data = await fallbackFn();
+    console.log(`Cache miss for key: ${key}`); // Log cache miss
 
     // Set the fetched data in cache for future use
     await setInCache(key, data, ttl);
+    console.log(`Cache set for key ${key} with TTL of ${ttl} seconds.`);
 
     return data; // Return the fetched data
   } catch (error) {
